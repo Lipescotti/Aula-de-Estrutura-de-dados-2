@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+typedef struct no
+{
+	int dado;
+	struct no *prox;
+} Node;
+
+
+// Ponteiro para a Cabeça da lista
+Node * Lista = NULL;
+
+
+// Inserir no inicio da lista
+void inserirInicio (int valor)
+{
+	Node *novo = malloc(sizeof(Node));
+	if (novo == NULL)
+	{
+		printf("Erro ao alocar memoria\n\n");
+	}
+
+	novo -> dado = valor;
+	novo -> prox = Lista;
+
+	Lista = novo;
+}
+
+
+// Inserir no fim da lista
+void inserirFim (int valor)
+{
+    Node *novo = malloc(sizeof(Node));
+	if (novo == NULL)
+	{
+		printf("Erro ao alocar memoria\n\n");
+	}
+    novo -> dado = valor;
+	novo -> prox = NULL;
+	if(Lista == NULL)
+    {
+        Lista == novo;
+        printf("Valor %d inserido no fim da lista.\n", valor);
+        return;
+
+    }
+	Node *ultimo = Lista;
+	while (ultimo -> prox != NULL)
+    {
+        ultimo = ultimo -> prox;
+
+    }
+
+    ultimo -> prox = novo;
+    printf("Valor %d inserido no fim da lista.\n", valor);
+
+}
+// exibir Lista
+void exibirLista ()
+{
+	Node *tmp = Lista;
+	if (tmp == NULL)
+	{
+		printf("Erro ao alocar memoria\n\n");
+		return;
+	}
+    printf("\n");
+	while (tmp != NULL)
+	{
+		printf("%d -> ", tmp -> dado);
+		tmp = tmp -> prox;
+	}
+	printf("NULL\n");
+}
+
+
+
+int main()
+{
+	inserirInicio(6);
+	inserirInicio(25);
+	inserirInicio(45);
+	inserirInicio(55);
+	inserirFim(60);
+	inserirFim(70);
+	exibirLista();
+}
