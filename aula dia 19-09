@@ -1,0 +1,134 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+//Struct das Coordenadas
+typedef struct coordenada
+{
+    int linha;
+    int coluna;
+    int valor;
+};
+
+//Struct da Lista
+typedef struct no
+{
+  struct coordenada item;
+  struct no *proximo;
+}Node;
+
+
+Node *Lista = NULL;
+int matriz[6][6];
+int passos = 0;
+
+//Inserir valor no começo
+void inserir(int linha, int coluna, int matriz[6][6])
+{
+    Node *novo = malloc(sizeof(Node));
+    if(novo == NULL)
+    {
+        printf("Erro 0x0001: Memória\n\n");
+        return;
+    }
+
+    novo->item.linha = linha;
+    novo->item.coluna = coluna;
+    novo->item.valor = matriz[linha][coluna];
+
+    novo->proximo = Lista;
+
+
+    Lista = novo;
+    passos++;
+}
+
+
+//Remover valor do inicio da lista
+void remover_inicio()
+{
+    Node *tLista = Lista;
+    if(tLista == NULL)
+    {
+        printf("Erro ao exibir lista\n\n");
+        return;
+    }
+    Lista = tLista->proximo;
+
+    free(tLista);
+}
+
+
+// Exibir lista
+void exibir()
+{
+    Node *tLista = Lista;
+    if(tLista == NULL)
+    {
+        printf("Erro ao exibir lista\n\n");
+        return;
+    }
+
+    while (tLista != NULL)
+    {
+
+        printf("%d -> ", tLista->item.valor);
+        tLista = tLista->proximo;
+    }
+    printf("\nTotal de passos = %d", passos);
+    printf("\n\n\n");
+
+
+}
+
+void tabuleiro()
+{
+        matriz[0][0] = 2;
+        matriz[1][1] = 8;
+        matriz[2][2] = 6;
+        matriz[3][3] = 4;
+        matriz[4][4] = 10;
+        matriz[5][5] = 12;
+
+    printf("--- Estado Atual da Matriz ---\n");
+    for(int i = 0; i < 6; i++)
+    {
+        for(int j = 0; j < 6; j++)
+        {
+            printf("%4d", matriz[i][j]);
+        }
+        printf("\n");
+    }
+    printf("------------------------------\n\n");
+
+}
+
+
+int main()
+{
+    tabuleiro();
+    inserir(0,0,matriz);
+    inserir(0,1,matriz);
+    inserir(0,2,matriz);
+    inserir(0,3,matriz);
+    inserir(1,3,matriz);
+    inserir(2,3,matriz);
+    inserir(3,3,matriz);
+    inserir(2,3,matriz);
+    inserir(2,2,matriz);
+    inserir(1,2,matriz);
+    inserir(1,1,matriz);
+    inserir(1,2,matriz);
+    inserir(1,3,matriz);
+    inserir(1,4,matriz);
+    inserir(2,4,matriz);
+    inserir(3,4,matriz);
+    inserir(4,4,matriz);
+    inserir(4,5,matriz);
+    inserir(5,5,matriz);
+    exibir();
+    
+    
+    
+    return 0;
+}
