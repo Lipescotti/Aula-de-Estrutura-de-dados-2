@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX 6
+
+int pilha[MAX];
+
+
+
+void push (int valor)
+{
+    //Verificar se a pilha está cheia
+    if(pilha[MAX-1] != NULL)
+    {
+        printf("Pilha CHEIA");
+        return;
+    }
+
+    //Inserir no topo da pilha
+    for(int i = 0; i < MAX; i++)
+    {
+        if(pilha[i] == NULL)
+        {
+            pilha[i] = valor;
+            printf("Valor salvo com sucesso\n\n");
+            break;
+        }
+    }
+}
+
+
+//Remover elemento do topo da pilha
+void pop()
+{
+    for(int i = MAX -1; i >= 0; i--)
+    {
+        if(pilha[i] != NULL)
+        {
+            pilha[i] = NULL;
+            printf("Elemento excluido do topo da pilha\n\n");
+            return;
+        }
+    }
+
+}
+
+
+//Exibir pilha
+void exibir_pilha()
+{
+    for(int i = MAX-1; i >= 0; i--)
+    {
+        printf("%d\n",pilha[i]);
+
+        for(int j = MAX; j > i+1; j--)
+        {
+            printf("   ");
+        }
+        printf("|");
+        printf("->");
+    }
+    printf("\n\n\n");
+}
+
+
+//Exibir o topo da pilha
+int peek()
+{
+    for(int i = MAX - 1; i >=0; i--)
+    {
+        if(pilha[i] != NULL)
+        {
+            return pilha[i];
+        }
+    }
+
+}
+
+
+int main()
+{
+    push(57);
+    push(20);
+    push(55);
+    push(35);
+    exibir_pilha();
+    pop();
+    pop();
+
+    printf("%d é o elemento no topo da pilha\n", peek());
+
+    return 0;
+}
