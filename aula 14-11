@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+
+//Gerar o primo mais proximo
+int primo(int n)
+{
+    if (n<= 2)
+    {
+        return 0;
+    }
+    int candidato = n-1;
+    while (candidato >= 2)
+    {
+        int eh_primo = 1;
+        int limite = (int)sqrt(candidato);
+        if (candidato %2 == 0 && candidato != 2)
+        {
+            eh_primo = 0;
+        }
+        else
+        {
+            for (int i = 3; i<= limite; i+=2)
+            {
+                    if(candidato%i == 0)
+                    {
+                        eh_primo = 0;
+                        break;
+                    }
+            }
+        }
+        if (eh_primo)
+        {
+            return candidato;
+        }
+        candidato--;
+    }
+    return 0;
+}
+int tamanho_colisao(int tam)
+{
+    int tamanho = 2*tam;
+    return primo(tamanho);
+}
+
+
+
+
+
+//Função Hash
+int funcao_hash (int chave)
+{
+    return chave%100;
+}
+
+
+// Função para inserir dados no vetor
+void inserir(int chave, int v[])
+{
+    int ix = funcao_hash(chave);
+    do
+    {
+
+        if(v[ix] == NULL)
+        {
+            v[ix] = chave;
+            return;
+        }
+        ix++;
+
+    }while(1); // verificar depois
+
+}
+
+// imprimir
+void imprimir (int v[], int tam)
+{
+    for(int i=0; i < tam; i++)
+    {
+        printf("Chave %d, Indice %d\n", v[i], i);
+    }
+}
+
+
+void buscar(int valor, int v[],int tam)
+{
+    int ix = funcao_hash(valor);
+
+    do
+    {
+        if(v[ix]==NULL)
+        {
+            printf("\n\nValor não localizado\n");
+            return;
+        }
+        if(v[ix]==valor)
+        {
+            printf("\n\nO numero %d, está na posição %d\n", v[ix], ix);
+            return;
+        }
+        ix++;
+    }while( ix != tam);
+}
+
+
+int main()
+{
+    int tam = tamanho_colisao(100);
+    int vetor = calloc(tam, sizeof(int));
+
+
+    inserir(985312, vetor);
+    inserir(185404, vetor);
+    inserir(300115, vetor);
+    inserir(111212, vetor);
+    inserir(555512, vetor);
+    inserir(999900, vetor);
+
+
+    imprimir(vetor, tam);
+
+
+    buscar( 300115, vetor, tam);
+    return 0;
+}
