@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct no
+{
+	int valor;
+	struct no *proximo;
+}Node;
+
+
+
+//Função Hash
+int funcao_hash (int chave)
+{
+    return chave%100;
+}
+
+
+// Função para inserir dados no vetor
+void inserir(int chave, Node *tabela[], int tam)
+{
+    int ix = funcao_hash(chave);
+ 	
+ 	Node *novo = (Node *)malloc(sizeof(Node));
+ 	novo->valor = chave;
+ 	novo->proximo = NULL;
+ 	
+ 	
+    if (tabela[ix] == NULL)
+    {
+    	tabela[ix] = novo;
+	}
+	else
+	{
+		Node *atual = tabela[ix];
+		
+		while (atual->proximo != NULL)
+		{
+			atual = atual->proximo;
+		}
+		atual->proximo = novo;
+	}
+
+}
+
+// imprimir
+void imprimir (Node *tabela[], int tam)
+{
+    int i = 0;
+    
+	for( i ; i < tam; i++)
+    {
+        printf("Indice %d: ", i);
+        Node *atual = tabela[i];
+        
+		while (atual != NULL)
+        {
+        	printf("%d -> ", atual->valor);
+        	atual = atual->proximo;
+		}
+		printf("NULL\n");
+    }
+}
+
+
+void buscar(int valor, Node *tabela[],int tam)
+{
+    int ix = funcao_hash(valor);
+	Node *atual = tabela[ix];
+	
+		
+    while (atual != NULL)
+    {
+    	if (atual->valor == valor)
+    	{
+    		if (atual->valor == valor)
+    		{
+    			printf("\n\nO numero %d esta na posicao %d\n", valor, ix);
+    			return;
+			}
+		}
+		atual = atual->proximo;
+	}
+	printf("\n\nValor %d nao localizado\n\n", valor);
+}
+
+
+int main()
+{
+    int tam = 100;
+    Node *tabela[100] = {NULL};
+
+
+    inserir(985312, tabela, tam);
+    inserir(185404, tabela, tam);
+    inserir(300115, tabela, tam);
+    inserir(111212, tabela, tam);
+    inserir(555512, tabela, tam);
+    inserir(999900, tabela, tam);
+
+    imprimir(tabela, tam);
+
+    buscar(300115, tabela, tam);
+    buscar(123456, tabela, tam);
+    return 0;
+}
